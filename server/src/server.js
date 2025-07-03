@@ -7,7 +7,7 @@ import { connectDB } from '../config/db.js'
 import messageRoutes from '../routes/message.routes.js'
 dotenv.config();
 import {app,server,io} from '../config/socket.js'
-import path from path;
+import path from "path";
 
 app.use(cookieParser());
 
