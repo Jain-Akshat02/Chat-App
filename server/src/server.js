@@ -25,11 +25,6 @@ app.use(cors({
 app.use(express.urlencoded({ extended: true }));
 app.use('/auth', authRoutes)   
 app.use('/message', messageRoutes)    
-app.get('/', (req, res) => {
-    res.send('Welcome to the API')
-});
-
-
 if(process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, '../client/dist')));
     app.get('*', (req, res) => {
