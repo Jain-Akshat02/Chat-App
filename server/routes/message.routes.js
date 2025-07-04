@@ -5,8 +5,9 @@ import { getUsers, getMessages, sendMessage } from '../controllers/message.contr
 const router = express.Router();
 
 router.get("/users", verifyUser,getUsers);
+console.log('---errorB---');
 router.get("/:id", verifyUser,getMessages);
-
+console.log('---errorB---');
 router.post("/send/:id", verifyUser, sendMessage);
-
+console.log('---errorB---');
 export default router
