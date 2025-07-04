@@ -5,7 +5,7 @@ import cors from "cors";
 
 import path from "path";
 
-import { connectDB } from "./lib/db.js";
+import { connectDB } from "../config/db.js";
 
 import authRoutes from "./routes/auth.route.js";
 import messageRoutes from "./routes/message.route.js";
@@ -15,7 +15,8 @@ dotenv.config();
 
 const PORT = process.env.PORT;
 const __dirname = path.resolve();
-
+app.use(express.json({ limit: '50mb' })); // Parse JSON payloads with a size limit of 50MB
+app.use(express.urlencoded({ limit: '50mb', extended: true })); // Parse URL-encoded data with a size limit of 50MB
 app.use(express.json());
 app.use(cookieParser());
 app.use(
