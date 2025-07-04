@@ -14,6 +14,13 @@ import { initSocket } from '../config/socket.js'; // 🚀 new import
 
 dotenv.config();
 const app = express();
+const originalUse = app.use.bind(app);
+app.use = (...args) => {
+  if (typeof args[0] === 'string' && args[0].startsWith('http')) {
+    console.error('🚨 Invalid route path passed to app.use():', args[0]);
+  }
+  return originalUse(...args);
+};
 const server = http.createServer(app);
 initSocket(server); // 💥 This replaces io/server logic in socket.js
 
