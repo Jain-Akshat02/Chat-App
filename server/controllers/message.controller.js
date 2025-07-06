@@ -1,7 +1,7 @@
 import Message from '../models/message.model.js';
 import {User} from '../models/user.model.js'; 
 import cloudinary from '../config/cloudinary.js'
-import {getRecieverSocketId} from '../config/socket.js';
+import {getRecieverSocketId} from '../src/server.js'; // Adjust the import path as needed
 import {io} from '../config/socket.js';
 export const getUsers = async (req, res) => {
     try {
