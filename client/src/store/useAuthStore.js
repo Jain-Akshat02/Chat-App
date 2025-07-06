@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import { io } from 'socket.io-client';
 
 const BASE_URL = import.meta.env.MODE === 'production'
-  ? "https://chat-app-kz3d.onrender.com/"
+  ? "https://chat-app-uf4o.onrender.com"
   : 'http://localhost:5000';
 export const useAuthStore = create((set,get) => ({
   authUser: null,
