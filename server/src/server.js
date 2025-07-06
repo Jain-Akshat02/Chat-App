@@ -14,6 +14,11 @@ dotenv.config();
 const PORT = process.env.PORT;
 const __dirname = path.resolve();
 
+app.use((req, res, next) => {
+  console.log("Incoming request:", req.method, req.url, "Origin:", req.headers.origin);
+  next();
+});
+
 app.use(express.json());
 app.use(cookieParser());
 app.use(
