@@ -5,19 +5,20 @@ import { Users } from "lucide-react";
 import { useAuthStore } from "../store/useAuthStore";
 
 const Sidebar = () => {
-  const { getUsers, users, selectedUser, setSelectedUser, isUsersLoading } = useChatStore();
+  const { getUsers, users=[], selectedUser, setSelectedUser, isUsersLoading } = useChatStore();
+  const {onlineUsers=[]} = useAuthStore();
   const [ showOnlineOnly, setShowOnlineOnly] = useState(false);
-
-  const {onlineUsers} = useAuthStore();
+  const filteredUsers = showOnlineOnly ? users.filter(user => onlineUsers.includes(user._id) ): users;
   useEffect(() => {
     getUsers();
   }, [getUsers]);
 
-  const filteredUsers = showOnlineOnly ? users.filter(user => onlineUsers.includes(user._id) ): users;
+  
 
   if (isUsersLoading) {
     return <SidebarSkeleton />
   }
+  if (!Array.isArray(filteredUsers)) return null;
   return (
     <aside className="h-full w-52 lg:72 border-r border-base-300 flex flex-col transition-all duration-200">
       <div className="border-b border-base-300 w-full p-5">
