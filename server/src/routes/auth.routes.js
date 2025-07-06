@@ -4,13 +4,13 @@ import {verifyUser} from '../middlewares/verifyUser.middleware.js';
 
 const router = express.Router();
 
-router.post('/signup',signup);
+router.post("/signup",signup);
 
-router.post('/login', login)
-router.post('/logout', logout)
+router.post("/login", login)
+router.post("/logout", logout)
 
-router.put('/update-profile', verifyUser, updateProfilePicture)
+router.put("/update-profile", verifyUser, updateProfilePicture);
 
-router.get('/check', verifyUser, checkAuth)     
+router.get("/check", verifyUser, checkAuth);
 
 export default router;

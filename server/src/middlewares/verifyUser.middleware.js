@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import {User} from "../models/user.model.js";
-import dotenv from "dotenv";
+
 
 export const verifyUser = async (req, res, next) => {
   try {
@@ -22,11 +22,7 @@ export const verifyUser = async (req, res, next) => {
     req.user = user;
     next();
   } catch (error) {
-    // Handle JWT verification errors specifically
-    if (error.name === 'JsonWebTokenError') {
-      return res.status(401).json({ message: "Invalid token" });
-    }
     console.error("Error in verifyUser middleware:", error.message);
-    return res.status(500).json({ message: "Internal server error" }); 
+    res.status(500).json({ message: "Internal server error" }); 
   }
 };
