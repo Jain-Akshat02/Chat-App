@@ -1,8 +1,8 @@
-import Message from '../models/message.model.js';
-import {User} from '../models/user.model.js'; 
+import Message from '../src/models/message.model.js';
+import {User} from '../src/models/user.model.js'; 
 import cloudinary from '../config/cloudinary.js'
 import {getRecieverSocketId} from '../src/server.js'; // Adjust the import path as needed
-import {io} from '../src/server.js'; // Adjust the import path as needed
+
 export const getUsers = async (req, res) => {
     try {
         const loggedInUser = req.user._id;
@@ -57,9 +57,8 @@ export const sendMessage = async (req, res) => {
         await newMessage.save();
         const receiverSocketId = getRecieverSocketId(receiverId);
 
-        if(receiverSocketId) {
-            io.to(receiverSocketId).emit("newMessage", newMessage);
-        }
+        // Socket emission should be handled in server.js where io is available
+        // Example: io.to(receiverSocketId).emit("newMessage", newMessage);
 
         res.status(201).json(newMessage);
     } catch (error) {
