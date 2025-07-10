@@ -2,6 +2,7 @@ import { create } from "zustand";
 import toast from "react-hot-toast";
 import { axiosInstance } from "../lib/axios.js";
 import { useAuthStore } from "./useAuthStore.js";
+
 export const useChatStore = create((set,get) => ({
     messages:[],
     users:[],
@@ -13,7 +14,7 @@ export const useChatStore = create((set,get) => ({
         set({ isUsersLoading: true });
         try {
          const res = await axiosInstance.get("/message/users");
-         set({users: res.data.users});  
+         set({users: res.data});  
         } catch (error) {
             console.error("Failed to load users", error);
             toast.error("Failed to load users");
