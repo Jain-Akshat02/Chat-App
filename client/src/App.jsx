@@ -15,7 +15,6 @@ import { useThemesStore } from './store/useThemesStore.js'
 const App=()=> {
   const {authUser,checkAuth,isCheckingAuth,onlineUsers} = useAuthStore();
   const {theme} = useThemesStore();
- console.log("Online Users:", onlineUsers);
  
  
   useEffect(()=>{
@@ -32,13 +31,16 @@ const App=()=> {
     <>
       <div data-theme= {theme}>
         <Navbar/>
-        <Routes>
-          <Route path="/" element={authUser? <HomePage/>: <Navigate to="/login"/>} />
-          <Route path="/signup" element={!authUser?<SignUpPage/>: <Navigate to="/"/>} />
-          <Route path="/login" element={!authUser?<Login/>: <Navigate to="/"/>} />
-          <Route path="/settings" element={<Settings/>} />
-          <Route path="/profile" element={authUser?<Profile/>: <Navigate to="/login"/>} />
-        </Routes>
+        
+        <div className="pt-16">
+          <Routes>
+            <Route path="/" element={authUser? <HomePage/>: <Navigate to="/login"/>} />
+            <Route path="/signup" element={!authUser?<SignUpPage/>: <Navigate to="/"/>} />
+            <Route path="/login" element={!authUser?<Login/>: <Navigate to="/"/>} />
+            <Route path="/settings" element={<Settings/>} />
+            <Route path="/profile" element={authUser?<Profile/>: <Navigate to="/login"/>} />
+          </Routes>
+        </div>
         <Toaster/>
       </div>
     </>

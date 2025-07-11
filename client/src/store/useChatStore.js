@@ -2,7 +2,6 @@ import { create } from "zustand";
 import toast from "react-hot-toast";
 import { axiosInstance } from "../lib/axios.js";
 import { useAuthStore } from "./useAuthStore.js";
-
 export const useChatStore = create((set,get) => ({
     messages:[],
     users:[],
@@ -14,10 +13,16 @@ export const useChatStore = create((set,get) => ({
         set({ isUsersLoading: true });
         try {
          const res = await axiosInstance.get("/message/users");
-         set({users: res.data});  
+         if (res.data.users) {
+             set({users: res.data.users});
+         } else {
+             console.error("No users property in response");
+             set({users: []});
+         }
         } catch (error) {
             console.error("Failed to load users", error);
             toast.error("Failed to load users");
+            set({users: []});
         } finally {
             set({ isUsersLoading: false });
         } 
@@ -26,6 +31,7 @@ export const useChatStore = create((set,get) => ({
         set({ isMessagesLoading: true });
         try {
             const res = await axiosInstance.get(`/message/${userId}`);
+            console.log("--function called--");
             set({ messages: res.data.messages});
         } catch (error) {
             toast.error("Failed to load messages");
@@ -57,11 +63,11 @@ export const useChatStore = create((set,get) => ({
             const res = await axiosInstance.post(`/message/send/${selectedUser._id}`, messageData);
             set({messages: [...messages, res.data]});
         } catch (error) {
-            console.log("Error sending message:", error);
             toast.error("Failed to send message");
         }
     },
     setSelectedUser: (selectedUser) => {
+        //optimise this one later
         set({selectedUser})
     }
 

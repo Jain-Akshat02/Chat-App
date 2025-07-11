@@ -5,23 +5,26 @@ import { Users } from "lucide-react";
 import { useAuthStore } from "../store/useAuthStore";
 
 const Sidebar = () => {
-  const { getUsers, users = [], selectedUser, setSelectedUser, isUsersLoading } = useChatStore();
-  const { onlineUsers = [] } = useAuthStore();
-  const [ showOnlineOnly, setShowOnlineOnly] = useState(false);
+  const { getUsers, users, selectedUser, setSelectedUser, isUsersLoading } = useChatStore();
+  const { onlineUsers, authUser } = useAuthStore();
+  const [ showOnlineOnly, setShowOnlineOnly] = useState(false);                                           
 
   
 useEffect(() => {
-    getUsers();
-  }, [getUsers]);
-const filteredUsers = showOnlineOnly ? users.filter(user => onlineUsers.includes(user._id) ): users;
+    if (authUser) {
+      getUsers();
+      console.log("calling getUsers");
+    }
+  }, [getUsers, authUser]);
+
+const filteredUsers = showOnlineOnly ? (users || []).filter(user => onlineUsers.includes(user._id) ) : (users || []);
   
 
   if (isUsersLoading) {
     return <SidebarSkeleton />
   }
- {filteredUsers.length === 0 && (
-          <div className="text-center text-zinc-500 py-4">No online users</div>
-        )}
+
+
   return (
     <aside className="h-full w-52 lg:w-72 border-r border-base-300 flex flex-col transition-all duration-200">
       <div className="border-b border-base-300 w-full p-5">
@@ -86,6 +89,9 @@ const filteredUsers = showOnlineOnly ? users.filter(user => onlineUsers.includes
       </div>
     </aside>
   );
+  {filteredUsers.length === 0 && (
+          <div className="text-center text-zinc-500 py-4">No online users</div>
+        )}
 };
 
 export default Sidebar;

@@ -31,7 +31,7 @@ app.use(
 );
 
 app.use("/auth", authRoutes);
-app.use("/messages", messageRoutes);
+app.use("/message", messageRoutes);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../client/dist")));
