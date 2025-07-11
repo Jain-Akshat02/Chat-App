@@ -9,6 +9,11 @@ const HomePage = () => {
   const { selectedUser } = useChatStore();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
+  // Handler to close sidebar on user select (mobile only)
+  const handleUserSelect = () => {
+    if (window.innerWidth < 1024) setSidebarOpen(false);
+  };
+
   return (
     <div className="h-screen bg-base-200 flex flex-col lg:flex-row items-center justify-center relative">
       <Navbar onSidebarToggle={() => setSidebarOpen((open) => !open)} />
@@ -20,7 +25,7 @@ const HomePage = () => {
       {sidebarOpen && (
         <div className="fixed inset-0 z-50 bg-black bg-opacity-40 flex lg:hidden">
           <div className="bg-base-100 w-64 h-full shadow-xl">
-            <Sidebar />
+            <Sidebar onUserSelect={handleUserSelect} />
           </div>
           <div className="flex-1" onClick={() => setSidebarOpen(false)} />
         </div>
