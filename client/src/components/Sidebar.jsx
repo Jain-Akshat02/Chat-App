@@ -9,30 +9,27 @@ const Sidebar = () => {
   const { onlineUsers, authUser } = useAuthStore();
   const [ showOnlineOnly, setShowOnlineOnly] = useState(false);                                           
 
-  
-useEffect(() => {
+  useEffect(() => {
     if (authUser) {
       getUsers();
-      console.log("calling getUsers");
     }
   }, [getUsers, authUser]);
 
-const filteredUsers = showOnlineOnly ? (users || []).filter(user => onlineUsers.includes(user._id) ) : (users || []);
-  
+  const filteredUsers = showOnlineOnly ? (users || []).filter(user => onlineUsers.includes(user._id) ) : (users || []);
 
   if (isUsersLoading) {
     return <SidebarSkeleton />
   }
 
-
   return (
-    <aside className="h-full w-52 lg:w-72 border-r border-base-300 flex flex-col transition-all duration-200">
-      <div className="border-b border-base-300 w-full p-5">
+    <aside className="h-full w-full lg:w-72 border-r border-base-300 flex flex-col transition-all duration-200 bg-base-100">
+      {/* Header */}
+      <div className="border-b border-base-300 w-full p-4 sm:p-5 flex flex-col gap-2">
         <div className="flex items-center gap-3">
           <Users className="size-6" />
           <span className="font-medium hidden lg:block">Contacts</span>
         </div>
-        <div className="mt-3 hidden lg:flex items-center gap-2">
+        <div className="mt-2 hidden lg:flex items-center gap-2">
           <label className="cursor-pointer flex items-center gap-2 mb-0">
             <input
               type="checkbox"
@@ -44,9 +41,9 @@ const filteredUsers = showOnlineOnly ? (users || []).filter(user => onlineUsers.
           </label>
           <span className="text-xs text-zinc-500 whitespace-nowrap">({onlineUsers.length - 1} online)</span>
         </div>
-
       </div>
-      <div className="overflow-y-auto w-full py-3">
+      {/* User List */}
+      <div className="overflow-y-auto w-full py-3 flex-1">
         {filteredUsers.map((user) => (
           <button
             key={user._id}
@@ -69,12 +66,11 @@ const filteredUsers = showOnlineOnly ? (users || []).filter(user => onlineUsers.
               />
               {onlineUsers.includes(user._id) && (
                 <span
-                  className="absolute bottom-0 right-0 size-3 bg-green-500 
+                  className="absolute bottom-0 right-0 size-3 bg-green-500 \
                   rounded-full ring-2 ring-zinc-900"
                 />
               )}
             </div>
-
             {/* User info - only visible on larger screens */}
             <div className="hidden lg:block text-left min-w-0">
               <div className="font-medium truncate">{user.fullName}</div>
@@ -84,14 +80,12 @@ const filteredUsers = showOnlineOnly ? (users || []).filter(user => onlineUsers.
             </div>
           </button>
         ))}
-
-        
+        {filteredUsers.length === 0 && (
+          <div className="text-center text-zinc-500 py-4">No users found</div>
+        )}
       </div>
     </aside>
   );
-  {filteredUsers.length === 0 && (
-          <div className="text-center text-zinc-500 py-4">No online users</div>
-        )}
 };
 
 export default Sidebar;
