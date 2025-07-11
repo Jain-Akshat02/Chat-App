@@ -3,8 +3,8 @@ import { THEMES } from "../lib/index.js";
 import { Send } from "lucide-react";
 import { useThemesStore } from "../store/useThemesStore";
 const PREVIEW_MESSAGES = [
-  { id: 1, content: "Hey! Will you marry me?", isSent: true },
-  { id: 2, content: "Chee yar tum to MAIT me padhte ho", isSent: false },
+  { id: 1, content: "Hello World!", isSent: true },
+  { id: 2, content: "This is JS", isSent: false },
 ];
 const Settings = () => {
   const { theme, setTheme } = useThemesStore();
